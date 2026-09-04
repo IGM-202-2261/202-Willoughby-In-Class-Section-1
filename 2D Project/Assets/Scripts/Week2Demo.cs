@@ -19,7 +19,7 @@ public class Week2Demo : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         sRend.color = overlapColor;
-        collision.gameObject.GetComponent<SpriteRenderer>().color = Color.purple;
+        //collision.gameObject.GetComponent<SpriteRenderer>().color = Color.purple;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
