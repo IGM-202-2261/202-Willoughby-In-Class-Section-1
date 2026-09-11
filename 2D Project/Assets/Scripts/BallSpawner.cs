@@ -20,12 +20,16 @@ public class BallSpawner : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext ctx)
     {
-        SpawnBallAtPosition(Vector3.zero);
+        if (ctx.performed)
+        {
+            Vector2 mousePosInWorldSpace = Camera.main.ScreenToWorldPoint(Mouse.current.position.value);
+            SpawnBallAtPosition(mousePosInWorldSpace);
+        }
     }
 
     void SpawnBallAtPosition(Vector3 pos)
     {
-        SpriteRenderer ballRenderer = Instantiate(ballPrefab, transform.position, Quaternion.identity);
+        SpriteRenderer ballRenderer = Instantiate(ballPrefab, pos, Quaternion.identity);
         ballRenderer.color = new Color(
                 Random.Range(0.2f, 1.0f),
                 Random.Range(0.2f, 1.0f),
