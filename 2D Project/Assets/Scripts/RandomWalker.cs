@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class RandomWalker : MonoBehaviour
@@ -5,12 +6,40 @@ public class RandomWalker : MonoBehaviour
     [SerializeField]
     private float stepDistance = 0.1f;
 
+    [SerializeField]
+    private SpriteRenderer squarePrefab;
+
+    [SerializeField]
+    private float noiseScale = 1.0f;
+
+    float timer = 0.0f;
+
+    [SerializeField]
+    private float actionInterval = 4.0f;
+
+    [SerializeField]
+    private Transform startPoint;
+
+    [SerializeField]
+    private Transform endPoint;
+
     void Update()
     {
-        float randValue = Random.Range(0.0f, 1.0f);
-        Vector3 pos = transform.position;
+        timer += Time.deltaTime;
 
-        if (randValue < 0.4f)
+        transform.position = Vector2.Lerp(startPoint.position, endPoint.position, timer / 10.0f);
+    }
+    /*
+     * Instantiate(squarePrefab, pos, Quaternion.identity).color = Color.black;
+        pos.x += stepDistance;
+        pos.y = Mathf.PerlinNoise1D((pos.x * noiseScale) + 8) * 4f;
+     * 
+     */
+
+
+    /*
+        float randValue = Random.Range(0.0f, 1.0f);
+     *         if (randValue < 0.4f)
         {
             pos.y += stepDistance;
         } 
@@ -26,6 +55,5 @@ public class RandomWalker : MonoBehaviour
         {
             pos.x -= stepDistance;
         }
-        transform.position = pos;
-    }
+     */
 }
