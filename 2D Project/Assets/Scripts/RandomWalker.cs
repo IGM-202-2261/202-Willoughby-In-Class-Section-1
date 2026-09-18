@@ -23,11 +23,35 @@ public class RandomWalker : MonoBehaviour
     [SerializeField]
     private Transform endPoint;
 
+    [SerializeField]
+    private float speed = 1f; // Move 1 unit per second (as a function of time)
+                              //private float speed  = 0.01f; // Assuming 100fps, move 1 unit per second
+
+    [SerializeField]
+    private bool useDeltaTime = true;
+
     void Update()
     {
-        timer += Time.deltaTime;
+        Vector3 pos = transform.position;
+        if (useDeltaTime)
+        {
+            pos.x += speed * Time.deltaTime;
+        } else
+        {
+            pos.x += (1 / 60.0f);
+        }
+        transform.position = pos;   
 
-        transform.position = Vector2.Lerp(startPoint.position, endPoint.position, timer / 10.0f);
+        //timer += Time.deltaTime;
+        //
+        //if(timer >= actionInterval)
+        //{
+        //
+        //
+        //    timer -= actionInterval;
+        //}
+
+        //transform.position = Vector2.Lerp(startPoint.position, endPoint.position, timer / 10.0f);
     }
     /*
      * Instantiate(squarePrefab, pos, Quaternion.identity).color = Color.black;
