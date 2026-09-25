@@ -2,10 +2,18 @@ using UnityEngine;
 
 public class Week5Tests : MonoBehaviour
 {
+    [SerializeField] Transform targetPos;
+    [SerializeField] float speed;
+
     [SerializeField] Vector2 vectorA;
     [SerializeField] Vector2 vectorB;
-    void Start()
+
+    void Update()
     {
+        // A - B = Vector from B to A
+        Vector3 direction = targetPos.position - transform.position;
+        
+        transform.position += direction.normalized * speed * Time.deltaTime;
     }
 
     private void OnDrawGizmos()
@@ -24,5 +32,11 @@ public class Week5Tests : MonoBehaviour
         //Vector2 aMinusB = vectorB - vectorA ;
         //Gizmos.DrawLine(Vector2.zero, aMinusB);
         Gizmos.DrawLine(Vector2.zero, vectorA / 2);
+
+        Debug.Log(vectorA.magnitude);
+
+        Debug.Log(vectorA.normalized);
+        vectorA.Normalize();
+        Debug.Log(vectorA);
     }
 }
