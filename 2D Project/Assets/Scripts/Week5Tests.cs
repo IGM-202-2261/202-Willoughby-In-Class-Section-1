@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Week5Tests : MonoBehaviour
 {
@@ -14,6 +15,16 @@ public class Week5Tests : MonoBehaviour
         Vector3 direction = targetPos.position - transform.position;
         
         transform.position += direction.normalized * speed * Time.deltaTime;
+
+        if(transform.position.x > 3 && transform.position.x < 3.1)
+        {
+            ScoreManager.Instance.UpdateScore(1);
+        }
+
+        if(transform.position.x > 5.5)
+        {
+            SceneManager.LoadScene("Week2");
+        }
     }
 
     private void OnDrawGizmos()

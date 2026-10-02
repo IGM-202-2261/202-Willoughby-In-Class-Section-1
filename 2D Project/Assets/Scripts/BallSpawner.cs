@@ -24,6 +24,7 @@ public class BallSpawner : MonoBehaviour
         {
             Vector2 mousePosInWorldSpace = Camera.main.ScreenToWorldPoint(Mouse.current.position.value);
             SpawnBallAtPosition(mousePosInWorldSpace);
+            ScoreManager.Instance.UpdateScore(1);
         }
     }
 

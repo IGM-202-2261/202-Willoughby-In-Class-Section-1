@@ -9,6 +9,7 @@ public class ProximitySensor : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         gizmoColor = Color.red;
+        ScoreManager.Instance.UpdateScore(1);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
