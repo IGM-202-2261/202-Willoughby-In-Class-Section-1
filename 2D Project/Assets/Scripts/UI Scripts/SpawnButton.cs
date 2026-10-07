@@ -12,12 +12,28 @@ public class SpawnButton : MonoBehaviour
     int numToSpawn;
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if(spawnSlider != null)
         {
             spawnSlider.onValueChanged.AddListener(OnSliderMoved);
+            OnSliderMoved(spawnSlider.value);
+        }
+        if(spawnButton != null)
+        {
+            spawnButton.onClick.AddListener(OnSpawnClick);
+        }
+    }
+
+    void OnDestroy()
+    {
+        if(spawnSlider != null)
+        {
+            spawnSlider.onValueChanged.RemoveListener(OnSliderMoved);
+        }
+        if(spawnButton != null)
+        {
+            spawnButton.onClick.RemoveListener(OnSpawnClick);
         }
     }
 
@@ -29,5 +45,10 @@ public class SpawnButton : MonoBehaviour
         {
             buttonText.text = $"Spawn {numToSpawn} balls!";
         }
+    }
+
+    private void OnSpawnClick()
+    {
+        ballSpawner.SpawnBallsAtCenter(numToSpawn);
     }
 }

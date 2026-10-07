@@ -37,4 +37,12 @@ public class BallSpawner : MonoBehaviour
                 Random.Range(0.2f, 1.0f)
             );
     }
+
+    public void SpawnBallsAtCenter(int numBalls)
+    {
+        for(int i = 0; i < numBalls; i++)
+        {
+            SpawnBallAtPosition(Vector3.zero);
+        }
+    }
 }
