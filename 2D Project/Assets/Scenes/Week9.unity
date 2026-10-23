@@ -508,8 +508,9 @@ MonoBehaviour:
   target: {fileID: 1660424435}
   fearTarget: {fileID: 1719752243}
   seekWeight: 1
-  fleeWeight: 1
-  stayInBoundsWeight: 10000
+  fleeWeight: 0
+  stayInBoundsWeight: 4
+  lookAheadSeconds: 0.5
 --- !u!212 &2042122861
 SpriteRenderer:
   serializedVersion: 2

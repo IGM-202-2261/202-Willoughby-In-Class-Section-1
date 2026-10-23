@@ -8,6 +8,7 @@ public class Seeker : Agent
     [SerializeField] private float seekWeight = 1f;
     [SerializeField] private float fleeWeight = 1f;
     [SerializeField] private float stayInBoundsWeight = 1f;
+    [SerializeField] private float lookAheadSeconds = 0.5f;
 
     Vector3 totalForce;
 
@@ -17,19 +18,26 @@ public class Seeker : Agent
 
         totalForce += Seek(target) * seekWeight;
         totalForce += Flee(fearTarget) * fleeWeight;
-        totalForce += StayInBounds() * stayInBoundsWeight;
+        totalForce += StayInBounds(lookAheadSeconds) * stayInBoundsWeight;
 
         return totalForce;
     }
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.green;
+
+        Gizmos.DrawWireCube(Vector3.zero, worldBounds);
+
+
         Vector3 posPlusVelocity = transform.position + velocity;
 
         Gizmos.color = Color.magenta;
-        Gizmos.DrawLine(transform.position, posPlusVelocity);
+        //Gizmos.DrawLine(transform.position, posPlusVelocity);
+        //
+        //Gizmos.color = Color.green;
+        //Gizmos.DrawLine(posPlusVelocity, posPlusVelocity + totalForce);
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(posPlusVelocity, posPlusVelocity + totalForce);
+        Gizmos.DrawSphere(CalcFuturePosition(lookAheadSeconds), 0.3f);
     }
 }

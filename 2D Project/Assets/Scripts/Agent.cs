@@ -9,7 +9,7 @@ public abstract class Agent : MonoBehaviour
     protected Vector3 acceleration;
     protected Vector3 steeringForce;
 
-    [SerializeField] private Vector3 worldBounds;
+    [SerializeField] protected Vector3 worldBounds;
 
 
     protected abstract Vector3 CalcSteering();
@@ -31,6 +31,14 @@ public abstract class Agent : MonoBehaviour
         rBody.MovePosition(nextPosition);
     }
 
+    protected Vector3 CalcFuturePosition(float seconds)
+    {
+        Vector3 velocityTimesTime = velocity * seconds;
+        return transform.position + velocityTimesTime;
+    }
+
+
+    // Steering Behaviors
     protected Vector3 Seek(Vector3 targetPos)
     {
         Vector3 desiredVelocity = targetPos - transform.position;
@@ -57,12 +65,14 @@ public abstract class Agent : MonoBehaviour
         return Flee(fleeTarget.transform.position);
     }
 
-    protected Vector3 StayInBounds()
+    protected Vector3 StayInBounds(float secondsAhead)
     {
-        if(transform.position.x > worldBounds.x / 2f ||
-           transform.position.x < -worldBounds.x / 2f ||
-           transform.position.y > worldBounds.y / 2f ||
-           transform.position.y < -worldBounds.y / 2f)
+        Vector3 futurePos = CalcFuturePosition(secondsAhead);
+
+        if(futurePos.x > worldBounds.x / 2f ||
+           futurePos.x < -worldBounds.x / 2f ||
+           futurePos.y > worldBounds.y / 2f ||
+           futurePos.y < -worldBounds.y / 2f)
         {
             return Seek(Vector3.zero);
         }
@@ -71,8 +81,5 @@ public abstract class Agent : MonoBehaviour
 
     public void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.green;
-
-        Gizmos.DrawWireCube(Vector3.zero, worldBounds);
     }
 }
