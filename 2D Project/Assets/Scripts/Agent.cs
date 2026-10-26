@@ -79,6 +79,18 @@ public abstract class Agent : MonoBehaviour
         return Vector3.zero;
     }
 
+    protected Vector3 Pursue(Agent pursuitTarget, float seconds)
+    {
+        Vector3 futurePos = pursuitTarget.CalcFuturePosition(seconds);
+        return Seek(futurePos);
+    }
+
+    protected Vector3 Evade(Agent evadeTarget, float seconds)
+    {
+        Vector3 futurePos = evadeTarget.CalcFuturePosition(seconds);
+        return Flee(futurePos);
+    }
+
     public void OnDrawGizmosSelected()
     {
     }

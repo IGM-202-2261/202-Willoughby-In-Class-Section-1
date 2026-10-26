@@ -4,9 +4,11 @@ public class Seeker : Agent
 {
     [SerializeField] private GameObject target;
     [SerializeField] private GameObject fearTarget;
+    [SerializeField] private Agent evadeTarget;
 
     [SerializeField] private float seekWeight = 1f;
     [SerializeField] private float fleeWeight = 1f;
+    [SerializeField] private float evadeWeight = 1f;
     [SerializeField] private float stayInBoundsWeight = 1f;
     [SerializeField] private float lookAheadSeconds = 0.5f;
 
@@ -18,6 +20,7 @@ public class Seeker : Agent
 
         totalForce += Seek(target) * seekWeight;
         totalForce += Flee(fearTarget) * fleeWeight;
+        totalForce += Evade(evadeTarget, lookAheadSeconds) * evadeWeight;
         totalForce += StayInBounds(lookAheadSeconds) * stayInBoundsWeight;
 
         return totalForce;
