@@ -11,6 +11,7 @@ public abstract class Agent : MonoBehaviour
 
     [SerializeField] protected Vector3 worldBounds;
 
+    public Vector3 Velocity { get { return velocity; } }
 
     protected abstract Vector3 CalcSteering();
 
@@ -89,6 +90,15 @@ public abstract class Agent : MonoBehaviour
     {
         Vector3 futurePos = evadeTarget.CalcFuturePosition(seconds);
         return Flee(futurePos);
+    }
+
+    protected Vector3 Alignment(Vector3 targetVelocity, bool clampToMaxSpeed = false)
+    {
+        if (clampToMaxSpeed)
+        {
+            targetVelocity = Vector3.ClampMagnitude(targetVelocity, maxSpeed);
+        }
+        return targetVelocity - velocity;
     }
 
     public void OnDrawGizmosSelected()

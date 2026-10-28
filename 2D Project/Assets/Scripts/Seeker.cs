@@ -19,8 +19,8 @@ public class Seeker : Agent
         totalForce = Vector3.zero;
 
         totalForce += Seek(target) * seekWeight;
-        totalForce += Flee(fearTarget) * fleeWeight;
-        totalForce += Evade(evadeTarget, lookAheadSeconds) * evadeWeight;
+        //totalForce += Flee(fearTarget) * fleeWeight;
+        //totalForce += Evade(evadeTarget, lookAheadSeconds) * evadeWeight;
         totalForce += StayInBounds(lookAheadSeconds) * stayInBoundsWeight;
 
         return totalForce;
