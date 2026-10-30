@@ -9,6 +9,8 @@ public abstract class Agent : MonoBehaviour
     protected Vector3 acceleration;
     protected Vector3 steeringForce;
 
+    protected Vector3 wanderTarget;
+
     [SerializeField] protected Vector3 worldBounds;
 
     public Vector3 Velocity { get { return velocity; } }
@@ -99,6 +101,41 @@ public abstract class Agent : MonoBehaviour
             targetVelocity = Vector3.ClampMagnitude(targetVelocity, maxSpeed);
         }
         return targetVelocity - velocity;
+    }
+
+    protected Vector3 Separate(Agent[] nearby, float radius)
+    {
+        Vector3 separateForce = Vector3.zero;
+
+        for(int i = 0; i < nearby.Length; i++)
+        {
+            float dist = Vector2.Distance
+                (transform.position, nearby[i].transform.position);
+
+            float forceInverse = 1.0f - (dist / radius);
+
+            separateForce += Flee(nearby[i].transform.position) * forceInverse;
+        }
+
+        separateForce = Vector3.ClampMagnitude(separateForce, maxSpeed);
+
+        return separateForce;
+    }
+
+    protected Vector3 Wander(float jitter, float secondsAhead, float radius)
+    {
+        Vector3 futurePos = CalcFuturePosition(secondsAhead);
+
+        jitter *= Time.fixedDeltaTime;
+
+        wanderTarget.x += Random.Range(-jitter, jitter);
+        wanderTarget.y += Random.Range(-jitter, jitter);
+
+        wanderTarget = wanderTarget.normalized * radius;
+
+        Vector3 targetInFront = futurePos + wanderTarget;
+
+        return Seek(targetInFront);
     }
 
     public void OnDrawGizmosSelected()
