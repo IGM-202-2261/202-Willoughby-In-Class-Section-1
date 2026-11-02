@@ -11,6 +11,9 @@ public abstract class Agent : MonoBehaviour
 
     protected Vector3 wanderTarget;
 
+    //For 3D rotation
+    //private Quaternion nextRotation;
+
     [SerializeField] protected Vector3 worldBounds;
 
     public Vector3 Velocity { get { return velocity; } }
@@ -31,7 +34,21 @@ public abstract class Agent : MonoBehaviour
 
         nextPosition += velocity * Time.fixedDeltaTime;
 
+        if (velocity.magnitude != 0)
+        {
+            //For 2D rotation
+            float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+            rBody.MoveRotation(angle);
+
+            //For 3D rotation
+            //nextRotation = Quaternion.LookRotation(velocity, Vector3.up);
+        }
+
+        //For 2D
         rBody.MovePosition(nextPosition);
+
+        //For 3D
+        //rBody.Move(nextPosition, nextRotation);
     }
 
     protected Vector3 CalcFuturePosition(float seconds)
