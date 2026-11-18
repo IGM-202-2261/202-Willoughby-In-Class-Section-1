@@ -13,6 +13,8 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         yRot = transform.rotation.eulerAngles.x;
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnLook(InputAction.CallbackContext ctx)

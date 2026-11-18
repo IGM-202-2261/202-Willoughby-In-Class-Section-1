@@ -805,7 +805,7 @@ GameObject:
   - component: {fileID: 1903302453}
   - component: {fileID: 1903302452}
   - component: {fileID: 1903302451}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -921,6 +921,7 @@ GameObject:
   - component: {fileID: 1937113536}
   - component: {fileID: 1937113537}
   - component: {fileID: 1937113538}
+  - component: {fileID: 1937113539}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1108,7 +1109,19 @@ MonoBehaviour:
     m_ActionId: 27c5f898-bc57-4ee1-8800-db469aca5fe3
     m_ActionName: 'Player/Crouch[/Keyboard/c]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1937113537}
+        m_TargetAssemblyTypeName: CharacterMovement, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f1ba0d36-48eb-4cd5-b651-1c94a6531f70
     m_ActionName: 'Player/Jump[/Keyboard/space]'
   - m_PersistentCalls:
@@ -1181,6 +1194,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterMovement
   moveSpeed: 5
+  downSnapDistance: 2
+  walkableLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  heightCompensation: 0
+  jumpStrength: 200
 --- !u!54 &1937113538
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1208,6 +1227,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!135 &1937113539
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937113531}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.44
+  m_Center: {x: 0, y: -0.6, z: 0}
 --- !u!1 &1973524045
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,7 +1260,7 @@ GameObject:
   - component: {fileID: 1973524048}
   - component: {fileID: 1973524047}
   - component: {fileID: 1973524046}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
