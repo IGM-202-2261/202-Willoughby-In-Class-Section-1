@@ -15,6 +15,9 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 playerMovement;
     private bool isGrounded;
 
+    Vector3 projectedForward;
+    Vector3 projectedRight;
+
     void Awake()
     {
         height = GetComponent<CapsuleCollider>().height / 2.0f;
@@ -24,19 +27,24 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 pos = transform.position;
-        pos += transform.right * playerMovement.x * moveSpeed * Time.fixedDeltaTime;
-        pos += transform.forward * playerMovement.y * moveSpeed * Time.fixedDeltaTime;
-        transform.position = pos;
+        Vector3 groundNormal = Vector3.up;
 
         RaycastHit hit;
-        if(isGrounded && Physics.Raycast(transform.position, Vector3.down, 
+        if (isGrounded && Physics.Raycast(transform.position, Vector3.down,
             out hit, downSnapDistance, walkableLayers))
         {
-            Vector3 newLoc = hit.point;
-            newLoc.y += height + heightCompensation;
-            transform.position = newLoc;
+            groundNormal = hit.normal;
         }
+
+        projectedForward = Vector3.ProjectOnPlane(transform.forward, 
+            groundNormal).normalized;
+        projectedRight = Vector3.ProjectOnPlane(transform.right, 
+            groundNormal).normalized;
+
+        Vector3 pos = transform.position;
+        pos += projectedRight * playerMovement.x * moveSpeed * Time.fixedDeltaTime;
+        pos += projectedForward * playerMovement.y * moveSpeed * Time.fixedDeltaTime;
+        transform.position = pos;
     }
 
     public void OnMove(InputAction.CallbackContext ctx)
@@ -59,5 +67,14 @@ public class CharacterMovement : MonoBehaviour
         {
             isGrounded = true;
         }
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, transform.position + projectedForward);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + projectedRight);
     }
 }
